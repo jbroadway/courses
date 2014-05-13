@@ -1,4 +1,4 @@
-create table #prefix#course_category (
+create table #prefix#courses_category (
 	id int not null auto_increment primary key,
 	owner int not null,
 	title char(72) not null,
@@ -6,7 +6,7 @@ create table #prefix#course_category (
 	index (owner, sorting)
 );
 
-create table #prefix#course_course (
+create table #prefix#courses_course (
 	id int not null auto_increment primary key,
 	title char(72) not null,
 	summary char(255) not null,
@@ -23,7 +23,7 @@ create table #prefix#course_course (
 	index (owner, category, sorting, status)
 );
 
-create table #prefix#course_page (
+create table #prefix#courses_page (
 	id int not null auto_increment primary key,
 	title char(72) not null,
 	course int not null,
@@ -31,7 +31,7 @@ create table #prefix#course_page (
 	index (course, sorting)
 );
 
-create table #prefix#course_item (
+create table #prefix#courses_item (
 	id int not null auto_increment primary key,
 	title char(192) not null,
 	page int not null,
@@ -44,7 +44,7 @@ create table #prefix#course_item (
 	index (course, type)
 );
 
-create table #prefix#course_learner (
+create table #prefix#courses_learner (
 	user int not null,
 	course int not null,
 	ts datetime not null,
@@ -52,7 +52,7 @@ create table #prefix#course_learner (
 	index (ts)
 );
 
-create table #prefix#course_data (
+create table #prefix#courses_data (
 	id int unsigned not null auto_increment primary key,
 	course int not null,
 	user int not null,

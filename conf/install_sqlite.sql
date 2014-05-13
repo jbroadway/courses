@@ -1,13 +1,13 @@
-create table #prefix#course_category (
+create table #prefix#courses_category (
 	id integer primary key,
 	owner int not null,
 	title char(72) not null,
 	sorting int not null
 );
 
-create index #prefix#course_category_owner on #prefix#course_category (owner, sorting);
+create index #prefix#courses_category_owner on #prefix#courses_category (owner, sorting);
 
-create table #prefix#course_course (
+create table #prefix#courses_course (
 	id integer primary key,
 	title char(72) not null,
 	thumb char(128),
@@ -23,18 +23,18 @@ create table #prefix#course_course (
 	instructor int not null default 0
 );
 
-create index #prefix#course_course_owner_category on #prefix#course_course (owner, category, sorting, status);
+create index #prefix#courses_course_owner_category on #prefix#courses_course (owner, category, sorting, status);
 
-create table #prefix#course_page (
+create table #prefix#courses_page (
 	id integer primary key,
 	title char(72) not null,
 	course int not null,
 	sorting int not null
 );
 
-create index #prefix#course_page_course on #prefix#course_page (course, sorting);
+create index #prefix#courses_page_course on #prefix#courses_page (course, sorting);
 
-create table #prefix#course_item (
+create table #prefix#courses_item (
 	id integer primary key,
 	title char(192) not null,
 	page int not null,
@@ -45,19 +45,19 @@ create table #prefix#course_item (
 	course int not null
 );
 
-create index #prefix#course_item_page on #prefix#course_item (page, sorting);
-create index #prefix#course_item_course on #prefix#course_item (course, type);
+create index #prefix#courses_item_page on #prefix#courses_item (page, sorting);
+create index #prefix#courses_item_course on #prefix#courses_item (course, type);
 
-create table #prefix#course_learner (
+create table #prefix#courses_learner (
 	user integer not null,
 	course integer not null,
 	ts datetime not null,
 	primary key (user, course)
 );
 
-create index #prefix#course_learner_ts on #prefix#course_learner (ts);
+create index #prefix#courses_learner_ts on #prefix#courses_learner (ts);
 
-create table #prefix#course_data (
+create table #prefix#courses_data (
 	id integer primary key,
 	course int not null,
 	user int not null,
@@ -69,6 +69,6 @@ create table #prefix#course_data (
 	feedback text not null
 );
 
-create index #prefix#course_data_user on #prefix#course_data (user, ts);
-create index #prefix#course_data_course_user on #prefix#course_data (course, user);
-create index #prefix#course_data_item_user on #prefix#course_data (item, user);
+create index #prefix#courses_data_user on #prefix#courses_data (user, ts);
+create index #prefix#courses_data_course_user on #prefix#courses_data (course, user);
+create index #prefix#courses_data_item_user on #prefix#courses_data (item, user);
