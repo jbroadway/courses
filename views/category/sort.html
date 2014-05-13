@@ -1,0 +1,43 @@
+{! admin/util/fontawesome !}
+
+<p>
+	<a href="/courses/admin">&laquo; {"Back"}</a>
+</p>
+
+<p><em>{"Drag and drop to re-order categories:"}</em></p>
+
+<ul id="categories">
+{% foreach categories as id, category %}
+	<li data-id="{{id}}" class="draggable"><i class="fa fa-sort"></i> {{category}}</li>
+{% end %}
+</ul>
+
+<p id="saving" class="notice"></p>
+
+<script>
+$(function () {
+	$('#categories').sortable ({
+		update: function (e, ui) {
+			var order = [];
+
+			$('#categories>li').each (function () {
+				order.push ($(this).data ('id'));
+			});
+
+			courses.notice ('#saving', '{"Saving new order..."}');
+
+			$.post (
+				courses.prefix + 'category/order',
+				{order: order},
+				function (res) {
+					if (res.success) {
+						courses.notice ('#saving', '{"Saved!"}');
+					} else {
+						courses.notice ('#saving', '{"An error occurred."}');
+					}
+				}
+			);
+		}
+	});
+});
+</script>

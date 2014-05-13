@@ -1,0 +1,24 @@
+{! admin/util/fontawesome !}
+
+<div class="courses-course-summary">
+
+{% if thumb != '' %}
+	<img src="/{{thumb|Image::resize (%s, 39, 39)}}" alt="{{title}}" class="courses-course-thumbnail" />
+{% else %}
+	<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
+{% end %}
+
+<p>{{summary}}<br />
+
+{% if $_SERVER['REQUEST_METHOD'] !== 'POST' %}
+<form method="post">
+<input type="hidden" name="subscribe" value="1" />
+{% if availability == 4 %}
+	<button class="courses-course-price courses-course-price-paid">{"Join this course"} - {{price|courses\Filter::money}}</button>
+{% else %}
+	<button class="courses-course-price courses-course-price-free">{"Join this course for free"}</button>
+{% end %}
+</form>
+{% end %}
+
+</div>

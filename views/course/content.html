@@ -1,0 +1,415 @@
+{% if published %}
+<p class="visible-notice">Warning: You are editing a course that has already been published.</p>
+{% end %}
+
+<p>
+	<a href="/courses/course/unlock?id={{course}}&page={{page}}" id="done-editing">&laquo; {"Done Editing"}</a>
+	<span id="saving">&nbsp;&nbsp;&nbsp;{"Saving..."}</span>
+</p>
+
+<div class="sidebar">
+	<strong>{"Add content"}:</strong>
+	<ul>
+		<li><i class="fa fa-bookmark"></i> <a href="#" id="add-section" data-bind="click: add_section_field">{"Section"}</a></li>
+		<li><i class="fa fa-pencil"></i> <a href="#" id="add-text" data-bind="click: add_text_field">{"Text"}</a></li>
+		<li><i class="fa fa-picture-o"></i> <a href="#" id="add-image" data-bind="click: add_image_field">{"Image"}</a></li>
+		<li><i class="fa fa-film"></i> <a href="#" data-bind="click: add_video_field">{"Video"}</a></li>
+		<li><i class="fa fa-headphones"></i> <a href="#" data-bind="click: add_audio_field">{"Audio"}</a></li>
+		<li><i class="fa fa-code"></i> <a href="#" data-bind="click: add_html_field">{"HTML code"}</a></li>
+		<li><i class="fa fa-plus-circle"></i> <a href="#" data-bind="click: add_reveal_field">{"Click-to-reveal"}</a></li>
+		<li><i class="fa fa-quote-left"></i> <a href="#" data-bind="click: add_pre_field">{"Pre-formatted text"}</a></li>
+		<li><i class="fa fa-cogs"></i> <a href="#" data-bind="click: add_scorm_field">{"SCORM module"}</a></li>
+		<li><i class="fa fa-download"></i> <a href="#" data-bind="click: add_file_field">{"File download"}</a></li>
+		<li><i class="fa fa-lightbulb-o"></i> <a href="#" data-bind="click: add_definition_field">{"Definition"}</a></li>
+	</ul>
+	<strong>{"Add a question"}:</strong>
+	<ul>
+		<li><i class="fa fa-star"></i> <a href="#" data-bind="click: add_quiz_field">{"Quiz"}</a></li>
+		<li><i class="fa fa-edit"></i> <a href="#" data-bind="click: add_input_field">{"Single-line answer"}</a></li>
+		<li><i class="fa fa-edit"></i> <a href="#" data-bind="click: add_para_field">{"Paragraph answer"}</a></li>
+		<li><i class="fa fa-arrow-circle-down"></i> <a href="#" data-bind="click: add_drop_field">{"Drop down"}</a></li>
+		<li><i class="fa fa-check"></i> <a href="#" data-bind="click: add_check_field">{"Checkboxes"}</a></li>
+		<li><i class="fa fa-check-circle-o"></i> <a href="#" data-bind="click: add_multi_field">{"Multiple choice"}</a></li>
+		<!-- li><i class="fa fa-cloud-upload"></i> <a href="#" data-bind="click: add_upload_field">{"File upload"}</a></li -->
+	</ul>
+</div>
+
+<div class="main">
+	<div class="toggle">
+		<a href="#" id="toggle-preview" data-bind="click: show_preview" title="{"Preview page"}"></a>
+		<a href="#" id="toggle-list" data-bind="click: show_list" title="{"Sort items"}"></a>
+		<a href="#" id="toggle-full" data-bind="click: show_full" title="{"Edit items"}"></a>
+	</div>
+	<div id="item-list-full">
+		<p class="info">{"Click the links to the left to add content to your page."}</p>
+		<ul id="item-list" data-bind="template: { name: template_name, foreach: items }"></ul>
+	</div>
+	<div id="item-list-list">
+		<p class="info">{"Drag and drop to re-order your page content."}</p>
+		<ul id="item-list-sortable" data-bind="sortable: { template: 'tpl-list-item', data: items }"></ul>
+	</div>
+	<div id="item-preview">
+		<p class="info">{"This is a preview of how your page content will appear."}</p>
+		<div id="item-preview-area"></div>
+	</div>
+</div>
+
+<script>
+$(function () {
+	$.waypoints.settings.scrollThrottle = 30;
+	$('.sidebar').waypoint (function (direction) {
+		if (direction === 'down') {
+			$(this).addClass ('sticky');
+		} else {
+			$(this).removeClass ('sticky');
+		}
+	});
+
+	editor.init ({
+		course: {{course}},
+		page: {{page}},
+		items: {{items|json_encode}},
+		scorm_modules: {{scorm_modules|json_encode}}
+	});
+});
+</script>
+
+<script id="tpl-list-item" type="text/html">
+	<li class="sortable-item" data-bind="attr: { 'data-id': id }">
+		<span data-bind="html: type_icon"></span>
+		<a href="#" data-bind="attr: { 'data-id': id }">
+			<span data-bind="text: sortable_title"></span>
+		</a>
+	</li>
+</script>
+
+<script id="tpl-item-1" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+		</p>
+		<p>
+			<textarea
+				name="content"
+				class="wysiwyg"
+				data-bind="value: content, attr: { 'data-id': id }"
+				style="width: 100%; height: 200px"
+			></textarea>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-2" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			{"Preview"}:<br />
+			<img data-bind="attr: { src: img_src }" class="item-preview" /><br />
+			<input type="hidden" name="content" data-bind="value: content, attr: { id: 'content-' + id }" size="76" />
+			<input type="submit" class="browse-button" value="{"Browse"}" data-bind="event: { click: editor.filemanager_image }" />
+		</p>
+		<p>
+			<label>{"Description"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="90" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-3" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			{"Preview"}:<br />
+			<div class="item-preview">
+				<video width="480" height="270" controls preload="metadata" class="video-js vjs-default-skin" data-bind="attr: { id: 'video-' + id }">
+				    <source type="video/mp4" data-bind="attr: { src: content }" />
+				</video>
+			</div>
+			<input type="hidden" name="content" placeholder="http://" data-bind="value: content, attr: { id: 'content-' + id }, event: { blur: editor.update_items }" size="76" />
+			<input type="submit" class="browse-button" value="{"Browse"}" data-bind="event: { click: editor.filemanager_video }" />
+		</p>
+		<p>
+			{"Cover photo (min 480x270)"}:<br />
+			<img data-bind="attr: { src: answer }" class="item-preview" /><br />
+			<input type="hidden" name="answer" placeholder="http://" data-bind="value: answer, attr: { id: 'answer-' + id }, event: { blur: editor.update_items }" size="76" />
+			<input type="submit" class="browse-button" value="{"Browse"}" data-bind="event: { click: editor.filemanager_cover }" />
+		</p>
+		</p>
+		<p>
+			<label>{"Description"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="90" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-4" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+		</p>
+		<p>
+			<textarea
+				name="content"
+				class="html"
+				data-bind="value: content, attr: { 'data-id': id }"
+			></textarea>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-5" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+		</p>
+		<p>
+			<textarea
+				name="content"
+				class="pre"
+				data-bind="value: content, attr: { 'data-id': id }"
+			></textarea>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-6" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Module"}:</label>
+			<select
+				name="title"
+				data-bind="options: editor.scorm_modules, optionsCaption: '- {"Select"} -', value: title, event: { change: editor.update_items }"></select>
+		</p>
+		<p>
+			<label>{"Description"}:</label>
+			<input type="text" name="content" data-bind="value: content, event: { blur: editor.update_items }" size="90" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-7" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"File"}:</label>
+			<input type="text" name="content" placeholder="http://" data-bind="value: content, attr: { id: 'content-' + id }, event: { blur: editor.update_items }" size="76" />
+			<input type="submit" value="{"Browse"}" data-bind="event: { click: editor.filemanager_file }" />
+		</p>
+		<p>
+			<label>{"Description"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="90" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-8" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+		</p>
+		<p>
+			<textarea
+				name="content"
+				class="wysiwyg"
+				data-bind="value: content, attr: { 'data-id': id }"
+				style="width: 100%; height: 200px"
+			></textarea>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-9" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Term"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+		</p>
+		<p>
+			<label>{"Definition"}:</label><br />
+			<textarea
+				name="content"
+				data-bind="value: content,event: { blur: editor.update_items }"
+				style="width: 98%; height: 50px"
+			></textarea>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-10" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Question"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+		<p>
+			<label class="wide">{"Correct answer"}:</label>
+			<input
+				type="text"
+				name="answer"
+				data-bind="value: answer, event: { blur: editor.update_items }" style="width: 200px" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-11" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Question"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-12" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label class="wide">{"Question"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+		<p>
+			<label class="ultra-wide">{"Choices (one per line)"}:</label><br />
+			<textarea
+				name="content"
+				data-bind="value: content,event: { blur: editor.update_items }"
+				style="width: 98%; height: 100px"
+			></textarea>
+		</p>
+		<p>
+			<label class="wide">{"Correct answer"}:</label>
+			<select
+				name="answer"
+				data-bind="options: answers, optionsCaption: '- {"Select"} -', value: answer, event: { change: editor.update_items }"></select>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-13" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label class="wide">{"Question"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+		<p>
+			<label class="ultra-wide">{"Choices (one per line)"}:</label><br />
+			<textarea
+				name="content"
+				data-bind="value: content,event: { blur: editor.update_items }"
+				style="width: 98%; height: 100px"
+			></textarea>
+		</p>
+		<p>
+			<label class="wide">{"Correct answer"}:</label>
+			<select
+				name="answer"
+				data-bind="options: answers, optionsCaption: '- {"Select"} -', value: answer, event: { change: editor.update_items }"></select>
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-14" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label class="wide">{"Question"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+		<p>
+			<label class="ultra-wide">{"Choices (one per line)"}:</label><br />
+			<textarea
+				name="content"
+				data-bind="value: content,event: { blur: editor.update_items }"
+				style="width: 98%; height: 100px"
+			></textarea>
+		</p>
+		<!--
+		<p>
+			<label class="wide">{"Correct answer"}:</label>
+			<select
+				name="answer"
+				data-bind="options: answers, optionsCaption: '- {"Select"} -', value: answer, event: { change: editor.update_items }"></select>
+		</p>
+		-->
+	</li>
+</script>
+
+<script id="tpl-item-15" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			{"Preview"}:<br />
+			<div class="item-preview">
+				<audio type="audio/mp3" controls preload="none" data-bind="attr: { id: 'audio-' + id, src: content }"></audio>
+			</div>
+			<input type="hidden" name="content" placeholder="http://" data-bind="value: content, attr: { id: 'content-' + id }, event: { blur: editor.update_items }" size="76" />
+			<input type="submit" class="browse-button" value="{"Browse"}" data-bind="event: { click: editor.filemanager_audio }" />
+		</p>
+		<p>
+			<label>{"Description"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="90" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-16" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+			<input type="hidden" name="content" value="" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-17" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Title"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" size="50" />
+			<input type="hidden" name="content" value="" />
+		</p>
+	</li>
+</script>
+
+<script id="tpl-item-18" type="text/html">
+	<li class="item" data-bind="attr: { id: 'item-' + id, 'data-id': id }">
+		<a href="#" class="delete" data-bind="event: { click: editor.delete_item }" title="{"Delete"}"><i class="fa fa-trash"></i></a>
+		<h6><span data-bind="html: type_icon"></span> <span data-bind="text: type_name"></span></h6>
+		<p>
+			<label>{"Instructions"}:</label>
+			<input type="text" name="title" data-bind="value: title, event: { blur: editor.update_items }" style="width: 580px" />
+		</p>
+	</li>
+</script>

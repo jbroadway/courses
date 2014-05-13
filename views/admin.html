@@ -1,0 +1,57 @@
+<p style="margin-top: -10px">
+	<a href="#" onclick="return courses.add_category ('{"Category name:"}')">{"Add Category"}</a>
+	&nbsp;|&nbsp;
+	<a href="/courses/category/sort">{"Sort Categories"}</a>
+	&nbsp;|&nbsp;
+	<a href="/courses/settings">{"Settings"}</a>
+</p>
+
+{% foreach categories as category %}
+<h5 class="category">
+	<span class="category-title" data-id="{{category->id}}" data-title="{{category->title}}">{{category->title}}</span>
+	<span class="click-note">{"Click to edit"}</span>
+	<br />
+	<a href="/courses/course/add?category={{category->id}}" class="sub-link">{"Add Course"}</a>
+	{% if count ($data->category->courses) === 0 %}
+		<span class="sub-text">&nbsp;|&nbsp;</span>
+		<a href="/courses/category/delete" data-id="{{category->id}}" class="sub-link" onclick="$.confirm_and_post (this, '{"Are you sure you want to delete this category?"}')">{"Delete Category"}</a>
+	{% end %}
+</h5>
+
+{% if count ($data->category->courses) > 0 %}
+<p>
+<table width="100%">
+	<tr>
+		<th width="37%">{"Course"}</th>
+		<th width="20%">{"Availability"}</th>
+		<th width="9%">{"Status"}</th>
+		<th width="34%">&nbsp;</th>
+	</tr>
+{% foreach category->courses as course %}
+	<tr>
+		<td><a href="/course/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></td>
+		<td>
+			{{course->availability|courses\Filter::availability}}
+			{% if course->availability == 4 %}
+				({{course->price|courses\Filter::money}})
+			{% end %}
+		</td>
+		<td>{{course->status|courses\Filter::status}}</td>
+		<td style="text-align: right">
+			<a href="/courses/course/learners?id={{course->id}}">{"Learners"}</a>
+			&nbsp;|&nbsp;
+			<a href="/courses/course/manage?id={{course->id}}">{"Pages"}</a>
+			&nbsp;|&nbsp;
+			<a href="/courses/course/edit?id={{course->id}}">{"Settings"}</a>
+			&nbsp;|&nbsp;
+			<a href="/courses/course/duplicate?id={{course->id}}">{"Duplicate"}</a>
+			&nbsp;|&nbsp;
+			<a href="/courses/course/delete" data-id="{{course->id}}" onclick="$.confirm_and_post (this, '{"Are you sure you want to delete this course?"}')">{"Delete"}</a>
+		</td>
+	</tr>
+{% end %}
+</table>
+</p>
+{% end %}
+
+{% end %}

@@ -1,0 +1,49 @@
+#courses-other-menu {
+	display: none;
+}
+
+#courses-course-body {
+	float: left;
+	width: 600px;
+}
+
+	#courses-course-body img {
+		max-width: 472px;
+	}
+
+#courses-course-comments {
+	border-top: 5px solid #ddd;
+}
+
+.error {
+	font-weight: bold;
+	color: #c33;
+}
+
+.learner-progress-bar {
+	display: block;
+	width: 98%;
+	height: 16px;
+	border: 1px solid #bbb;
+	background-color: #fff;
+}
+
+.learner-progress-made {
+	display: block;
+	width: 0%;
+	height: 16px;
+	border: 0;
+	background-color: #fd0;
+}
+
+.learner-progress-done {
+	display: block;
+	width: 100% !important;
+	height: 16px;
+	border: 0;
+	background-color: #8dc63f;
+}
+
+.courses-subscribe {
+	text-align: center;
+}

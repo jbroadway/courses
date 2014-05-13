@@ -1,0 +1,5 @@
+; <?php /*
+
+courses = "Modify courses"
+
+; */ ?>

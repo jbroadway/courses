@@ -1,0 +1,87 @@
+{! admin/util/fontawesome !}
+
+<div id="courses-course-menu">
+	{% if ! is_instructor %}
+	{% if ! is_learner %}
+		<form method="post">
+		<p class="courses-subscribe">
+			<input type="hidden" name="subscribe" value="1" />
+			<button class="courses-course-price courses-course-price-free">{"Join this course"}</button>
+		</p>
+		</form>
+	{% end %}
+	{% end %}
+
+	<h3>{"Contents"}:</h3>
+
+	<ol>
+	{% foreach pages as page_id, page_title %}
+		<li{% if page_id == $data->id %} class="current"{% end %}><a href="/course/{{course}}/{{course_title|URLify::filter}}/{{page_id}}/{{page_title|URLify::filter}}">{{page_title}}</a>
+		{% if page_id == $data->id %}
+			{% if has_sections %}
+				<ul>
+					{% foreach sections as section_id, section_title %}
+						<li><a href="#{{section_id}}">{{section_title}}</a></li>
+					{% end %}
+				</ul>
+			{% end %}
+		{% end %}
+		</li>
+	{% end %}
+	</ol>
+	<p class="courses-learner-links">
+	{% if is_learner %}
+	{% if instructor %}
+		<a href="/course/{{course}}/{{course_title|URLify::filter}}/contact">{"Email instructor"}</a><br />
+	{% end %}
+	{% end %}
+	{% if has_glossary %}
+		<a href="/course/{{course}}/{{course_title|URLify::filter}}/glossary">{"Glossary"}</a>
+	{% end %}
+	</p>
+
+	{% if is_instructor %}
+		<div class="courses-instructor-menu">
+			<p>{"Instructor Links"}:</p>
+			<ul>
+				<li><a href="/courses/course/learners?id={{course}}">{"Learners"}</a></li>
+				<li><a href="/courses/course/manage?id={{course}}">{"Edit course"}</a></li>
+				<li><a href="/courses/course/edit?id={{course}}">{"Settings"}</a></li>
+			</ul>
+		</div>
+	{% end %}
+	
+	{% if is_learner %}
+		<p class="courses-learner-progress">
+			{"Your progress"}:<br />
+			{! courses/status?course=[course] !}
+		</p>
+	{% end %}
+</div>
+
+<div id="courses-course-body">
+	<h3>{{title}}</h3>
+	{{page_body|none}}
+
+	{% if Appconf::courses ('Courses', 'comments') %}
+	<div id="courses-course-comments">
+	<h4>{"Comments"}</h4>
+	{! comments/embed?identifier=[comments_id] !}
+	</div>
+	{% end %}
+</div>
+
+<br clear="both" />
+
+<script>
+$(function () {
+	course.init ({
+		strings: {
+			answered: '{"You have submitted the following answer"}',
+			correct: '{"correct"}',
+			incorrect: '{"incorrect"}',
+			instructor: '{"Sorry, but instructors cannot submit answers."}'
+		}
+	});
+});
+</script>

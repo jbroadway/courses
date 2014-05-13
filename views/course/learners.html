@@ -1,0 +1,46 @@
+{! admin/util/fontawesome !}
+{! user/util/userchooser !}
+
+<p>
+	<a href="/courses/admin">&laquo; {"Back"}</a>
+	&nbsp;|&nbsp;
+	<a href="#" class="add-learner" data-course="{{course}}">{"Add Learner"}</a>
+</p>
+
+<p>
+<table id="learners" width="100%">
+	<tr>
+		<th width="30%">{"Learner"}</th>
+		<th width="30%">{"Progress"}</th>
+		<th width="20%">{"Status"}</th>
+		<th width="20%">&nbsp;</th>
+	</tr>
+	<tbody id="learner-list"></tbody>
+</table>
+</p>
+
+<script>
+// setup sample progress
+$(function () {
+	courses.tpl.learner = Handlebars.compile ($('#learner-tpl').html ());
+	courses.course = {{course}};
+	courses.set_learners ({{learners|json_encode}});
+});
+</script>
+
+<script id="learner-tpl" type="text/html">
+	<tr id="learner-\{{id}}" data-id="\{{course}}" data-id="\{{id}}">
+		<td><a href="mailto:\{{email}}">\{{name}}</a></td>
+		<td>
+			<span class="learner-progress-bar">
+				<span class="learner-progress-made" id="progress-\{{id}}"></span>
+			</span>
+		</td>
+		<td id="status-\{{id}}">{"Incomplete"}</td>
+		<td style="text-align: right">
+			<a href="/courses/course/learner?id=\{{course}}&learner=\{{id}}">{"Details"}</a>
+			&nbsp;|&nbsp;
+			<a href="#" class="remove-learner" data-course="\{{course}}" data-id="\{{id}}">{"Remove"}</a>
+		</td>
+	</tr>
+</script>

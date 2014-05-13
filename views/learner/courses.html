@@ -1,0 +1,22 @@
+{! admin/util/fontawesome !}
+
+{% foreach courses as course %}
+<div class="courses-course">
+	{% if course->thumb != '' %}
+		<img src="/{{course->thumb|Image::resize(%s, 39, 39)}}" alt="{{course->title}}" class="courses-course-thumbnail" />
+	{% else %}
+		<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
+	{% end %}
+	<h4 class="courses-course-title"><a href="/course/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h4>
+	<p class="courses-course-description">
+		<span class="courses-course-summary">{{course->summary}}</span>
+		{% if course->availability == 4 %}
+		<strong class="courses-course-price courses-course-price-paid">{{course->price|courses\Filter::money}}</strong>
+		{% elseif course->availability == 3 %}
+		<strong class="courses-course-price courses-course-price-free">{"Free with registration"}</strong>
+		{% else %}
+		<strong class="courses-course-price courses-course-price-free">{"Free"}</strong>
+		{% end %}
+	</p>
+</div>
+{% end %}
