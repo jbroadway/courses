@@ -1,7 +1,5 @@
 # Courses
 
-**Status: Beta**
-
 A course builder and delivery app for the [Elefant CMS](http://www.elefantcms.com/).
 A free and simple way to publish and host your own courses that keeps you in control.
 
@@ -83,4 +81,5 @@ courses, go to Tools > SCORM. To view the list of courses on your site visit the
 
 ## Documentation
 
-Early documentation is available through the Courses [Github wiki page](https://github.com/jbroadway/courses/wiki).
+Documentation for the Courses app is [managed here](https://github.com/jbroadway/courses-docs).
+A website for the documentation is coming soon.
