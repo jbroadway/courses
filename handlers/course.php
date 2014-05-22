@@ -29,7 +29,7 @@ if (User::is_valid ()) {
 if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') || $is_instructor || $is_learner) {
 	// free or already registered, show the course
 	$page->title = $course->title;
-	$page->layout = $appconf['courses']['layout'];
+	$page->layout = $appconf['Courses']['layout'];
 	$page->add_script ('/apps/courses/css/default.css');
 	$page->add_script ('/apps/courses/css/items.css');
 
@@ -222,7 +222,7 @@ switch ((int) $course->availability) {
 		
 		// show summary
 		$page->title = $course->title;
-		$page->layout = $appconf['courses']['layout'];
+		$page->layout = $appconf['Courses']['layout'];
 		$page->add_script ('/apps/courses/css/default.css');
 		echo View::render ('courses/course/summary', $course);
 		return;
@@ -230,7 +230,7 @@ switch ((int) $course->availability) {
 	case 4:
 		// paid, show summary and login/purchase link
 		$page->title = $course->title;
-		$page->layout = $appconf['courses']['layout'];
+		$page->layout = $appconf['Courses']['layout'];
 		$page->add_script ('/apps/courses/css/default.css');
 		echo View::render ('courses/course/summary', $course);
 
@@ -241,7 +241,7 @@ switch ((int) $course->availability) {
 			}
 
 			// Show pay wall
-			$handler = $appconf['courses']['payment_handler'];
+			$handler = $appconf['Courses']['payment_handler'];
 			$handler = ($handler === '') ? false : $handler;
 			$controller = $this;
 			if ($handler) {

@@ -1,7 +1,7 @@
 <?php
 
-$page->title = __ ($appconf['courses']['public_name']);
-$page->layout = $appconf['courses']['layout'];
+$page->title = __ ($appconf['Courses']['public_name']);
+$page->layout = $appconf['Courses']['layout'];
 
 if (User::is_valid ()) {
 	$courses = courses\Learner::courses ();
