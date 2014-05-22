@@ -357,7 +357,7 @@ var editor = (function ($) {
 	self.wysiwyg_update = function () {
 		$('.wysiwyg').each (function () {
 			var id = $(this).data ('id'),
-				html = $(this).getCode ();
+				html = $(this).redactor ('get');
 
 			for (var i in self.items ()) {
 				if (self.items ()[i].id == id) {
