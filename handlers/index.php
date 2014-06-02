@@ -1,5 +1,10 @@
 <?php
 
+if (count ($this->params) > 0) {
+	echo $this->run ('courses/course/' . join ('/', $this->params));
+	return;
+}
+
 $page->title = __ ($appconf['Courses']['public_name']);
 $page->layout = $appconf['Courses']['layout'];
 

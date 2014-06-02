@@ -3,18 +3,18 @@
 
 	<ol>
 	{% foreach pages as page_id, page_title %}
-		<li><a href="/course/{{id}}/{{title|URLify::filter}}/{{page_id}}/{{page_title|URLify::filter}}">{{page_title}}</a></li>
+		<li><a href="/courses/{{id}}/{{title|URLify::filter}}/{{page_id}}/{{page_title|URLify::filter}}">{{page_title}}</a></li>
 	{% end %}
 	</ol>
 
 	<p class="courses-learner-links">
 	{% if is_learner %}
 	{% if instructor %}
-		<a href="/course/{{id}}/{{title|URLify::filter}}/contact" class="current">{"Email instructor"}</a><br />
+		<a href="/courses/{{id}}/{{title|URLify::filter}}/contact" class="current">{"Email instructor"}</a><br />
 	{% end %}
 	{% end %}
 	{% if has_glossary %}
-		<a href="/course/{{id}}/{{title|URLify::filter}}/glossary">{"Glossary"}</a>
+		<a href="/courses/{{id}}/{{title|URLify::filter}}/glossary">{"Glossary"}</a>
 	{% end %}
 	</p>
 

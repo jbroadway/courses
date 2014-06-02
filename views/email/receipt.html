@@ -6,7 +6,7 @@ This is a receipt for your purchase of the "{{course->title}}" course. This is o
 
 Description: {{payment->description}} 
 Amount paid: ${{course->price}} 
-Course link: http://{{$_SERVER.HTTP_HOST}}/course/{{course->id}}/{{course->title|URLify::filter}} 
+Course link: http://{{$_SERVER.HTTP_HOST}}/courses/{{course->id}}/{{course->title|URLify::filter}} 
 
 Sincerely,
 {{conf ('General', 'site_name')}} 

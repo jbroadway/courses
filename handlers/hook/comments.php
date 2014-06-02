@@ -30,7 +30,7 @@ try {
 			. 'Click here to reply to this comment:'
 			. "\n\n"
 			. sprintf (
-				'http://%s/course/%d/%s/%d',
+				'http://%s/courses/%d/%s/%d',
 				$_SERVER['HTTP_HOST'],
 				$course->id,
 				URLify::filter ($course->title),

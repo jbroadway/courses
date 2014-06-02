@@ -7,7 +7,7 @@
 	{% else %}
 		<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
 	{% end %}
-	<h4 class="courses-course-title"><a href="/course/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h4>
+	<h4 class="courses-course-title"><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h4>
 	<p class="courses-course-description">
 		<span class="courses-course-summary">{{course->summary}}</span>
 		{% if course->availability == 4 %}
