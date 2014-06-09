@@ -37,7 +37,7 @@ if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') 
 
 	if (! isset ($this->params[2])) {
 		foreach ($pages as $id => $title) {
-			$this->redirect (preg_replace ('|^/courses|', '', $_SERVER['REQUEST_URI']) . '/' . $id . '/' . URLify::filter ($title));
+			$this->redirect (preg_replace ('|^/courses|', '/courses', $_SERVER['REQUEST_URI']) . '/' . $id . '/' . URLify::filter ($title));
 		}
 
 		// show the table of contents
