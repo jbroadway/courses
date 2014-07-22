@@ -1,6 +1,8 @@
 {! admin/util/fontawesome !}
 
-<h2>{"My courses"}</h2>
+<div id="courses-course-menu">
+
+<h3>{"My courses"}</h3>
 
 {% if count ($data->courses) == 0 %}
 <p>{"You are not currently subscribed to any courses."}</p>
@@ -23,7 +25,7 @@
 {% end %}
 
 {% if count ($data->instructing) > 0 %}
-<h2>{"Instructing courses"}</h2>
+<h3>{"Instructing courses"}</h3>
 
 {% foreach instructing as course %}
 	<div class="courses-course">
@@ -41,4 +43,4 @@
 
 {% end %}
 
-<h2>{"Available courses"}</h2>
+</div>

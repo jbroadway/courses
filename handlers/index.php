@@ -5,6 +5,7 @@ if (count ($this->params) > 0) {
 	return;
 }
 
+$page->id = 'courses';
 $page->title = __ ($appconf['Courses']['public_name']);
 $page->layout = $appconf['Courses']['layout'];
 

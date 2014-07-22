@@ -2,7 +2,7 @@
 
 {% foreach categories as category %}
 	{% if category->course_count %}
-	<h3 class="courses-category">{{category->title}}</h3>
+	<h2 class="courses-category">{{category->title}}</h2>
 		{% foreach category->courses as course %}
 		<div class="courses-course">
 			{% if course->thumb != '' %}

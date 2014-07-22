@@ -47,6 +47,7 @@ $page->add_script ('/js/jquery-ui/jquery-ui.min.js');
 $page->add_script ('/apps/courses/js/knockout-2.2.0.min.js');
 $page->add_script ('/apps/courses/js/knockout-sortable.min.js');
 $page->add_script ('/apps/admin/js/redactor/redactor.min.js');
+$page->add_script ('/apps/admin/js/redactor/plugins/imagebrowser.js');
 $page->add_script ('/apps/courses/js/codemirror/lib/codemirror.js');
 $page->add_script ('/apps/courses/js/video.min.js');
 $page->add_script ('/apps/courses/js/audiojs/audio.min.js');

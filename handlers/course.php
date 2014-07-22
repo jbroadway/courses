@@ -28,6 +28,7 @@ if (User::is_valid ()) {
 
 if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') || $is_instructor || $is_learner) {
 	// free or already registered, show the course
+	$page->id = 'courses';
 	$page->title = $course->title;
 	$page->layout = $appconf['Courses']['layout'];
 	$page->add_script ('/apps/courses/css/default.css');
@@ -221,6 +222,7 @@ switch ((int) $course->availability) {
 		}
 		
 		// show summary
+		$page->id = 'courses';
 		$page->title = $course->title;
 		$page->layout = $appconf['Courses']['layout'];
 		$page->add_script ('/apps/courses/css/default.css');
@@ -229,6 +231,7 @@ switch ((int) $course->availability) {
 
 	case 4:
 		// paid, show summary and login/purchase link
+		$page->id = 'courses';
 		$page->title = $course->title;
 		$page->layout = $appconf['Courses']['layout'];
 		$page->add_script ('/apps/courses/css/default.css');

@@ -98,10 +98,11 @@ var editor = (function ($) {
 	 */
 	self.redactor_options = {
 		autoresize: false,
+		plugins: ['imagebrowser'],
 		buttons: [
 			'html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', '|',
 			'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-			'table', 'link', '|', 'fontcolor', 'backcolor', '|',
+			'table', 'link', 'imagebrowser', '|', 'fontcolor', 'backcolor', '|',
 			'alignment', 'horizontalrule'
 		]
 	};
