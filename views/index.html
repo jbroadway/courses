@@ -1,8 +1,9 @@
 {! admin/util/fontawesome !}
 
+<div id="courses-course-body">
 {% foreach categories as category %}
 	{% if category->course_count %}
-	<h2 class="courses-category">{{category->title}}</h2>
+	<h3>{{category->title}}</h3>
 		{% foreach category->courses as course %}
 		<div class="courses-course">
 			{% if course->thumb != '' %}
@@ -25,3 +26,4 @@
 		{% end %}
 	{% end %}
 {% end %}
+</div>
