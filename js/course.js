@@ -19,9 +19,17 @@ var course = (function ($) {
 		self.strings = (options && options.strings) ? options.strings : self.strings;
 		$('.item-input-form').submit (self.save_input);
 		$('.item-input-quiz').submit (self.save_quiz);
-		$('.item-reveal h4').click (function () {
-			$(this).next ().toggle (400);
-			return false;
+		$('.item-reveal h4').click (function (e) {
+			e.preventDefault ();
+
+			var p = $(this).parent (),
+				border_bottom = p.css ('borderBottom');
+
+			p.css ('borderBottom', 'none');
+
+			$(this).next ().toggle (400, function () {
+				p.css ('borderBottom', border_bottom);
+			});
 		});
 	};
 

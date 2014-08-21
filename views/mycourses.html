@@ -1,44 +1,30 @@
 {! admin/util/fontawesome !}
 
-<h2>{"My courses"}</h2>
+<div id="courses-course-menu">
+
+<h3>{"My courses"}</h3>
 
 {% if count ($data->courses) == 0 %}
 <p>{"You are not currently subscribed to any courses."}</p>
 {% else %}
 
+<ul>
 {% foreach courses as course %}
-	<div class="courses-course">
-		{% if course->thumb != '' %}
-			<img src="/{{course->thumb|Image::resize(%s, 39, 39)}}" alt="{{course->title}}" class="courses-course-thumbnail" />
-		{% else %}
-			<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
-		{% end %}
-		<h4 class="courses-course-title"><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h4>
-		<p class="courses-course-description">
-			<span class="courses-course-summary">{{course->summary}}</span>
-		</p>
-	</div>
+	<li><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></li>
 {% end %}
+</ul>
 
 {% end %}
 
 {% if count ($data->instructing) > 0 %}
-<h2>{"Instructing courses"}</h2>
+<h3>{"Instructing courses"}</h3>
 
+<ul>
 {% foreach instructing as course %}
-	<div class="courses-course">
-		{% if course->thumb != '' %}
-			<img src="/{{course->thumb|Image::resize(%s, 39, 39)}}" alt="{{course->title}}" class="courses-course-thumbnail" />
-		{% else %}
-			<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
-		{% end %}
-		<h4 class="courses-course-title"><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h4>
-		<p class="courses-course-description">
-			<span class="courses-course-summary">{{course->summary}}</span>
-		</p>
-	</div>
+	<li><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></li>
 {% end %}
+</ul>
 
 {% end %}
 
-<h2>{"Available courses"}</h2>
+</div>
