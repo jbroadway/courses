@@ -10,4 +10,13 @@ icon = lightbulb-o
 label = "Learners: My Courses"
 icon = lightbulb-o
 
+[courses/list]
+
+label = "Courses: List"
+icon = lightbulb-o
+
+category[label] = "Category (optional)"
+category[type] = select
+category[callback] = "courses\Category::list_for_embed"
+
 ; */ ?>
