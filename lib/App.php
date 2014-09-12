@@ -23,6 +23,16 @@ class App {
 		asort ($providers);
 		return $providers;
 	}
+
+	/**
+	 * Get yes/no for the a field in the Dynamic Objects dialog.
+	 */
+	public static function yes_no () {
+		return array (
+			(object) array ('key' => 'no', 'value' => __ ('No')),
+			(object) array ('key' => 'yes', 'value' => __ ('Yes')),
+		);
+	}
 }
 
 ?>
