@@ -1,21 +1,21 @@
 {% if ! desc %}
-<ul class="courses-list">
-{% foreach courses as _id, _title %}
-	<li><a href="/courses/{{_id}}/{{_title|URLify::filter}}">{{_title}}</a></li>
-{% end %}
-</ul>
+	<ul class="courses-list">
+	{% foreach courses as _id, _title %}
+		<li><a href="/courses/{{_id}}/{{_title|URLify::filter}}">{{_title}}</a></li>
+	{% end %}
+	</ul>
 {% else %}
-<div class="courses-course-list">
-{% foreach courses as course %}
-	<div class="courses-course">
-		<h4 class="courses-course-title"><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h3>
-		<p class="courses-course-description">
-			<span class="courses-course-summary">{{course->summary}}</span>
-		</p>
-		<p class="courses-course-info">
-			<a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{"Learn More"}</a>
-		</p>
+	<div class="courses-course-list">
+	{% foreach courses as course %}
+		<div class="courses-course">
+			<h4 class="courses-course-title"><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></h3>
+			<p class="courses-course-description">
+				<span class="courses-course-summary">{{course->summary}}</span>
+			</p>
+			<p class="courses-course-info">
+				<a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{"Learn More"}</a>
+			</p>
+		</div>
+	{% end %}
 	</div>
 {% end %}
-</div>
-{% end if %}
