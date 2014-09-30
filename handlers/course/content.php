@@ -37,6 +37,7 @@ $this->run ('admin/util/fontawesome');
 $this->run ('filemanager/util/browser');
 
 $page->add_style ('/apps/admin/js/redactor/redactor.css');
+$page->add_style ('/apps/courses/css/redactor.css');
 $page->add_style ('/apps/courses/js/codemirror/lib/codemirror.css');
 $page->add_style ('/apps/courses/css/video-js.min.css');
 $page->add_style ('/apps/courses/css/admin.css');
