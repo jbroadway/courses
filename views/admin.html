@@ -2,8 +2,10 @@
 	<a href="#" onclick="return courses.add_category ('{"Category name:"}')">{"Add Category"}</a>
 	&nbsp;|&nbsp;
 	<a href="/courses/category/sort">{"Sort Categories"}</a>
+	{% if User::require_acl ('settings') %}
 	&nbsp;|&nbsp;
 	<a href="/courses/settings">{"Settings"}</a>
+	{% end %}
 </p>
 
 {% foreach categories as category %}

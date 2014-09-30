@@ -1,6 +1,6 @@
 <?php
 
-$this->require_acl ('admin', 'courses');
+$this->require_acl ('admin', 'courses', 'settings');
 
 require_once ('apps/admin/lib/Functions.php');
 
