@@ -19,6 +19,18 @@ class Category extends \Model {
 			->order ('sorting', 'asc')
 			->fetch_assoc ('id', 'title');
 	}
+	
+	/**
+	 * Get a sorted list of categories for the Dynamic Objects menu.
+	 */
+	public static function list_for_embed () {
+		$res = self::sorted ();
+		$out = array ((object) array ('key' => '', 'value' => __ ('- select -')));
+		foreach ($res as $id => $title) {
+			$out[] = (object) array ('key' => $id, 'value' => $title);
+		}
+		return $out;
+	}
 }
 
 ?>
