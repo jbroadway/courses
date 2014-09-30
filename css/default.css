@@ -11,6 +11,28 @@
 		max-width: 472px;
 	}
 
+#courses-course-pager {
+	position: relative;
+	margin-top: 12px;
+	margin-bottom: 20px;
+	min-height: 20px;
+}
+
+	#courses-course-pager-previous {
+		position: absolute;
+		width: 50%;
+		left: 0;
+		top: 0;
+	}
+	
+	#courses-course-pager-next {
+		position: absolute;
+		width: 50%;
+		right: 0;
+		top: 0;
+		text-align: right;
+	}
+
 #courses-course-comments {
 	border-top: 5px solid #ddd;
 }

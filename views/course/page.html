@@ -63,6 +63,21 @@
 	<h3>{{title}}</h3>
 	{{page_body|none}}
 
+	{% if previous || next %}
+	<div id="courses-course-pager">
+		<div id="courses-course-pager-previous">
+		{% if previous %}
+			<button onclick="window.location.href = '{{previous}}'">&laquo; {"Previous"}</button>
+		{% end %}
+		</div>
+		<div id="courses-course-pager-next">
+		{% if next %}
+			<button onclick="window.location.href = '{{next}}'">{"Next"} &raquo;</button>
+		{% end %}
+		</div>
+	</div>
+	{% end %}
+
 	{% if Appconf::courses ('Courses', 'comments') %}
 	<div id="courses-course-comments">
 	<h4>{"Comments"}</h4>

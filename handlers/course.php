@@ -160,6 +160,26 @@ if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') 
 	$page->add_script ('/apps/courses/js/api.js');
 	$page->add_script ('/apps/courses/js/course.js');
 
+	// determine previous and next pages
+	$page_ids = array_keys ($pages);
+	$page_count = count ($page_ids);
+	$prefix = '/courses/' . $course->id . '/' . URLify::filter ($course->title) . '/';
+	$previous = false;
+	$next = false;
+	for ($i = 0; $i < $page_count; $i++) {
+		if ($pid == $page_ids[$i]) {
+			if ($i > 0) {
+				$previous = $prefix . $page_ids[$i - 1] . '/' . URLify::filter ($pages[$page_ids[$i - 1]]);
+			}
+
+			if ($i < $page_count - 1) {
+				$next = $prefix . $page_ids[$i + 1] . '/' . URLify::filter ($pages[$page_ids[$i + 1]]);
+			}
+
+			break;
+		}
+	}
+
 	// show a page
 	echo View::render (
 		'courses/course/page',
@@ -176,7 +196,9 @@ if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') 
 			'is_instructor' => $is_instructor,
 			'is_learner' => $is_learner,
 			'has_sections' => count ($sections),
-			'sections' => $sections
+			'sections' => $sections,
+			'previous' => $previous,
+			'next' => $next
 		)
 	);
 
