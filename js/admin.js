@@ -161,6 +161,7 @@ var courses = (function ($) {
 			list.append (self.tpl.learner (self.learners[i]));
 			$('#progress-' + self.learners[i].id).css ({width: self.learners[i].progress + '%'});
 			if (parseInt (self.learners[i].progress) === 100) {
+				$('#progress-' + self.learners[i].id).addClass ('learner-progress-done');
 				$('#status-' + self.learners[i].id).html ($.i18n ('Complete'));
 			}
 		}

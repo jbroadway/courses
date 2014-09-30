@@ -195,6 +195,7 @@
 
 	.item p label {
 		width: 75px;
+		padding-right: 10px;
 		display: inline-block;
 	}
 
@@ -223,12 +224,12 @@
 	.item-preview {
 		width: 472px;
 		border: 0;
-		margin-left: 83px;
+		margin-left: 90px;
 		margin-bottom: 5px;
 	}
 
 	.browse-button {
-		margin-left: 82px;
+		margin-left: 90px;
 	}
 
 .learner-progress-bar {
