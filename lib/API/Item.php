@@ -52,6 +52,10 @@ class Item extends Restful {
 				return $this->error ($i->error);
 			}
 		}
+
+		// Clear input count cache
+		$this->controller->cache ()->delete ('courses:' . $_POST['course'] . ':inputs');
+
 		return true;
 	}
 
@@ -102,6 +106,11 @@ class Item extends Restful {
 			$c->put ();
 		}
 
+		// Clear input count cache
+		if (\courses\Item::is_input ($i->type)) {
+			$this->controller->cache ()->delete ('courses:' . $i->course . ':inputs');
+		}
+
 		return $i->orig ();
 	}
 
@@ -119,6 +128,8 @@ class Item extends Restful {
 		if ($i->error) {
 			return $this->error ($i->error);
 		}
+
+		$type = $i->type;
 
 		if (! isset ($_POST['course'])) {
 			return $this->error (__ ('Missing parameter: course'));
@@ -149,6 +160,11 @@ class Item extends Restful {
 			$c = new \courses\Course ($course);
 			$c->has_glossary = 0;
 			$c->put ();
+		}
+
+		// Clear input count cache
+		if (\courses\Item::is_input ($type)) {
+			$this->controller->cache ()->delete ('courses:' . $course . ':inputs');
 		}
 
 		return true;
