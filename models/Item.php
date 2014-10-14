@@ -2,8 +2,10 @@
 
 namespace courses;
 
-class Item extends \Model {
+class Item extends \ExtendedModel {
 	public $table = '#prefix#courses_item';
+	
+	public $_extended_field = 'extradata';
 
 	const TEXT       = 1;
 	const IMAGE      = 2;

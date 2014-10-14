@@ -40,6 +40,7 @@ create table #prefix#courses_item (
 	content text not null,
 	answer char(128) not null default '',
 	course int not null,
+	extradata text not null default '',
 	index (page, sorting),
 	index (course, type)
 );

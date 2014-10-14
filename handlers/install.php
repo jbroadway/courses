@@ -1,45 +1,60 @@
 <?php
 
+// keep unauthorized users out
 $this->require_acl ('admin', 'courses');
 
+// set the layout
 $page->layout = 'admin';
 
-$cur = $this->installed ('courses', $appconf['Admin']['version']);
+// get the version and check if the app installed
+$version = Appconf::get ($this->app, 'Admin', 'version');
+$current = $this->installed ($this->app, $version);
 
-if ($cur === true) {
-	$page->title = 'Already installed';
-	echo '<p><a href="/courses/admin">Continue</a></p>';
-	return;
-} elseif ($cur !== false) {
-	header ('Location: /' . $appconf['Admin']['upgrade']);
-	exit;
+if ($current === true) {
+    // app is already installed and up-to-date, stop here
+    $page->title = __ ('Already installed');
+    printf ('<p><a href="/%s/admin">%s</a>', $this->app, __ ('Continue'));
+    return;
+
+} elseif ($current !== false) {
+    // earlier version found, redirect to upgrade handler
+    $this->redirect ('/' . Appconf::get ($this->app, 'Admin', 'upgrade'));
 }
 
-$page->title = 'Installing App: Courses';
+$page->title = sprintf (
+    '%s: %s',
+    __ ('Installing App'),
+    Appconf::get ($this->app, 'Admin', 'name')
+);
 
+// grab the database driver and begin the transaction
 $conn = conf ('Database', 'master');
 $driver = $conn['driver'];
 DB::beginTransaction ();
 
-$error = false;
-$sqldata = sql_split (file_get_contents ('apps/courses/conf/install_' . $driver . '.sql'));
-foreach ($sqldata as $sql) {
-	if (! DB::execute ($sql)) {
-		$error = DB::error ();
-		break;
-	}
+// parse the database schema into individual queries
+$file = 'apps/' . $this->app . '/conf/install_' . $driver . '.sql';
+$sql = sql_split (file_get_contents ($file));
+
+// execute each query in turn
+foreach ($sql as $query) {
+    if (! DB::execute ($query)) {
+        // show error and rollback on failures
+        printf (
+            '<p class="visible-notice">%s: %s</p><p>%s</p>',
+            __ ('Error'),
+            DB::error (),
+            __ ('Install failed.')
+        );
+        DB::rollback ();
+        return;
+    }
 }
 
-if ($error) {
-	DB::rollback ();
-	echo '<p class="visible-notice">Error: ' . $error . '</p>';
-	echo '<p>Install failed.</p>';
-	return;
-}
+// commit transaction and mark the app installed
 DB::commit ();
+$this->mark_installed ($this->app, $version);
 
-echo '<p><a href="/courses/admin">Done.</a></p>';
-
-$this->mark_installed ('courses', $appconf['Admin']['version']);
+printf ('<p><a href="/%s/admin">%s</a></p>', $this->app, __ ('Done.'));
 
 ?>

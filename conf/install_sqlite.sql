@@ -42,7 +42,8 @@ create table #prefix#courses_item (
 	type int not null,
 	content text not null,
 	answer char(128) not null default '',
-	course int not null
+	course int not null,
+	extradata text not null default ''
 );
 
 create index #prefix#courses_item_page on #prefix#courses_item (page, sorting);
