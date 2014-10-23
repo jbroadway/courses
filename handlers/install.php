@@ -1,7 +1,7 @@
 <?php
 
 // keep unauthorized users out
-$this->require_acl ('admin', 'courses');
+$this->require_acl ('admin', $this->app);
 
 // set the layout
 $page->layout = 'admin';

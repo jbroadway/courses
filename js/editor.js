@@ -27,6 +27,11 @@ var editor = (function ($) {
 	self.items = null;
 	
 	/**
+	 * The preview window object.
+	 */
+	self.preview_window = null;
+	
+	/**
 	 * Defaults for the various item types.
 	 */
 	self.defaults = {
@@ -336,6 +341,8 @@ var editor = (function ($) {
 	
 				if (! res.success) {
 					$.add_notification (res.error);
+				} else {
+					self.refresh_preview ();
 				}
 			}
 		);
@@ -391,22 +398,27 @@ var editor = (function ($) {
 	};
 
 	/**
-	 * Update the preview div with the latest page contents.
+	 * Update the preview tab with the latest page contents.
+	 */
+	self.show_preview = function () {
+		var url = '/courses/preview/' + self.course + '/' + self.page;
+		
+		if (self.preview_window === null || self.preview_window.closed) {
+			self.preview_window = window.open (url, 'elefant-preview', '');
+		} else {
+			self.preview_window.location.reload (true);
+		}
+		
+		return false;
+	};
+	
+	/**
+	 * Update the preview tab if one is open.
 	 */
 	self.refresh_preview = function () {
-		var preview_area = $('#item-preview-area');
-		
-		preview_area.html ('<i class="fa fa-spinner fa-spin"></i> ' + self.str.loading);
-
-		$.get ('/courses/course/preview', {id: self.course, page: self.page}, function (res) {
-			preview_area.html (res);
-			self.initialize_plugins ();
-
-			preview_area.on ('submit', function (event) {
-				event && event.preventDefault ();
-				return false;
-			});
-		});
+		if (self.preview_window !== null && ! self.preview_window.closed) {
+			self.preview_window.location.reload (true);
+		}
 	};
 
 	/**
@@ -612,7 +624,7 @@ var editor = (function ($) {
 	};
 
 	/**
-	 * Show the list tab.
+	 * Show the full tab.
 	 */
 	self.show_full = function () {
 		$('#toggle-full').addClass ('active');
@@ -624,22 +636,6 @@ var editor = (function ($) {
 
 		// init/re-init plugins
 		self.initialize_plugins ();
-		return false;
-	};
-
-	/**
-	 * Show the list tab.
-	 */
-	self.show_preview = function () {
-		$('#toggle-full').removeClass ('active');
-		$('#toggle-list').removeClass ('active');
-		$('#toggle-preview').addClass ('active');
-		$('#item-list-full').hide ();
-		$('#item-list-list').hide ();
-		$('#item-preview').show ();
-
-		// refresh the preview contents
-		self.refresh_preview ();
 		return false;
 	};
 	
