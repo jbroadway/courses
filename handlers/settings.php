@@ -16,7 +16,6 @@ $form->data = array (
 	'course_layout' => $appconf['Courses']['course_layout'],
 	'comments' => $appconf['Courses']['comments'],
 	'payment_handler' => $appconf['Courses']['payment_handler'],
-	'layouts' => admin_get_layouts (),
 	'payment_handlers' => courses\App::payment_handlers ()
 );
 
