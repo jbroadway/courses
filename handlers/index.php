@@ -9,6 +9,9 @@ $page->id = 'courses';
 $page->title = __ ($appconf['Courses']['public_name']);
 $page->layout = $appconf['Courses']['layout'];
 
+$this->run ('admin/util/minimal-grid');
+$page->add_style ('/apps/courses/css/list.css');
+
 if (User::is_valid ()) {
 	$courses = courses\Learner::courses ();
 
