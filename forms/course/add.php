@@ -7,7 +7,7 @@ not empty = 1
 [summary]
 
 not empty = 1
-length = "1-200"
+length = "1-255"
 
 [category]
 
