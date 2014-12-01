@@ -3,7 +3,7 @@
 <div id="courses-course-body">
 {% foreach categories as category %}
 	{% if category->course_count %}
-	<h2>{{category->title}}</h2>
+	<h3>{{category->title}}</h3>
 	<div class="courses-course-list e-row-variable">
 		{% foreach category->courses as course %}
 		<div class="e-col-33 e-no-padding">
@@ -12,7 +12,7 @@
 					<a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">
 						<div class="courses-thumbnail"
 							{% if course->thumb != '' %}
-								style="background-image: url('{{course->thumb}}')"
+								style="background-image: url('/{{course->thumb|Image::resize (%s, 400, 300, 'cover', 'ext')}}')"
 							{% else %}
 								style="background-image: url(/apps/courses/css/default.jpg)"
 							{% end %}

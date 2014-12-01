@@ -8,7 +8,7 @@
 				<a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">
 					<div class="courses-thumbnail"
 						{% if course->thumb != '' %}
-							style="background-image: url('{{course->thumb}}')"
+							style="background-image: url('/{{course->thumb|Image::resize (%s, 400, 300, 'cover', 'ext')}}')"
 						{% else %}
 							style="background-image: url(/apps/courses/css/default.jpg)"
 						{% end %}

@@ -247,6 +247,7 @@ switch ((int) $course->availability) {
 		$page->id = 'courses';
 		$page->title = $course->title;
 		$page->layout = $appconf['Courses']['layout'];
+		$this->run ('admin/util/minimal-grid');
 		$page->add_script ('/apps/courses/css/default.css');
 		echo View::render ('courses/course/summary', $course);
 		return;
@@ -256,6 +257,7 @@ switch ((int) $course->availability) {
 		$page->id = 'courses';
 		$page->title = $course->title;
 		$page->layout = $appconf['Courses']['layout'];
+		$this->run ('admin/util/minimal-grid');
 		$page->add_script ('/apps/courses/css/default.css');
 		echo View::render ('courses/course/summary', $course);
 

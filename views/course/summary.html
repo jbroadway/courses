@@ -1,14 +1,20 @@
-{! admin/util/fontawesome !}
-
-<div class="courses-course-summary">
-
-{% if thumb != '' %}
-	<img src="/{{thumb|Image::resize (%s, 39, 39)}}" alt="{{title}}" class="courses-course-thumbnail" />
-{% else %}
-	<i class="fa fa-lightbulb-o fa-3x courses-course-thumbnail"></i>
-{% end %}
-
-<p>{{summary}}<br />
+<div class="summary e-row-equal">
+	<div class="e-col-40 e-no-padding">
+		<div class="thumbnail-wrapper">
+			<div class="thumbnail"
+				{% if thumb != '' %}
+					style="background-image: url('/{{thumb|Image::resize (%s, 600, 450, 'cover', 'ext')}}')"
+				{% else %}
+					style="background-image: url(/apps/courses/css/default.jpg)"
+				{% end %}
+			></div>
+		</div>
+	</div>
+	<div class="summary-info e-col-60 e-no-padding">
+		<div class="summary-info-text">
+			<p>{{summary}}</p>
+		</div>
+		<div class="summary-link">
 
 {% if $_SERVER['REQUEST_METHOD'] !== 'POST' %}
 <form method="post">
@@ -21,4 +27,8 @@
 </form>
 {% end %}
 
+		</div>
+	</div>
 </div>
+
+<div class="details">{{ details|none }}</div>
