@@ -33,7 +33,7 @@
 }
 
 .courses-item figure {
-	width: 472px;
+	min-width: 472px;
 	margin: auto;
 }
 
