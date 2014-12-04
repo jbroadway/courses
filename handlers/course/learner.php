@@ -33,7 +33,7 @@ foreach ($answers as $answer) {
 	}
 }
 
-$page->title = $c->title . ' - ' . __ ('Learner') . ': ' . $u->name;
+$page->title = $c->title . ' - ' . __ ('Learner') . ': ' . Template::sanitize ($u->name);
 
 $page->add_script ('/apps/courses/js/admin.js');
 
