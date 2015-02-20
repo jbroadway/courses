@@ -1,0 +1,13 @@
+{% if count ($data->courses) == 0 %}
+<p><b>{"No courses taken."}</b></p>
+{% else %}
+<p><b>{"Courses taken"}:</b></p>
+
+<ul>
+{% foreach courses as course %}
+	<li><a href="/courses/{{course->id}}/{{course->title|URLify::filter}}">{{course->title}}</a></li>
+{% end %}
+</ul>
+{% end %}
+
+<p><a href="/courses/admin">{"All courses"}</a></p>
