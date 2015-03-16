@@ -143,7 +143,7 @@ var editor = (function ($) {
 		self.initialized = true;
 
 		// register event handlers
-		$('.main').on ('blur', '.redactor_editor', self.wysiwyg_update);
+		$('.main').on ('blur', '.redactor-editor', self.wysiwyg_update);
 
 		self.show_full ();
 	};
@@ -365,7 +365,7 @@ var editor = (function ($) {
 	self.wysiwyg_update = function () {
 		$('.wysiwyg').each (function () {
 			var id = $(this).data ('id'),
-				html = $(this).redactor ('get');
+				html = $(this).redactor ('code.get');
 
 			for (var i in self.items ()) {
 				if (self.items ()[i].id == id) {
