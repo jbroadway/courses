@@ -152,7 +152,7 @@ var editor = (function ($) {
 	 * Initialize or reinitialize plugins (wysiwyg editor, syntax highlighter, etc.).
 	 */
 	self.initialize_plugins = function () {
-		$('.wysiwyg').redactor (self.redactor_options);
+		$('.wysiwyg:not(.wysiwyg-initialized)').redactor (self.redactor_options).addClass ('wysiwyg-initialized');
 		_V_.options.flash.swf = '/apps/courses/css/video-js.swf';
 		$('video').each (function () {
 			_V_ ($(this).attr ('id'));
