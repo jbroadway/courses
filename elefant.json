@@ -2,7 +2,7 @@
     "type":         "app",
     "folder":       "courses",
     "name":         "Courses",
-    "version":      "0.8.0",
+    "version":      "0.9.2",
     "website":      "http://www.elefantcms.com/",
     "repository":   "git://github.com/jbroadway/courses.git",
     "author": {
