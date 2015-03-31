@@ -1,5 +1,6 @@
 {! filemanager/util/browser !}
 {! user/util/userchooser !}
+{! admin/util/wysiwyg?field_id=details !}
 
 <div class="form">
 <form method="POST" id="{{_form}}">
@@ -12,7 +13,12 @@
 
 <p>
 	{"Summary"}: <span class="notice" id="summary-notice">{"Please enter a summary (up to 200 characters)."}</span><br />
-	<textarea name="summary" cols="60" rows="4">{{summary|quotes}}</textarea>
+	<textarea name="summary" cols="60" rows="4">{{summary}}</textarea>
+</p>
+
+<p>
+	{"Details"}:<br />
+	<textarea name="details" id="details">{{details}}</textarea>
 </p>
 
 <p>

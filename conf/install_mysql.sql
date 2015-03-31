@@ -20,6 +20,7 @@ create table #prefix#courses_course (
 	status int not null,
 	has_glossary int not null default 0,
 	instructor int not null default 0,
+	details text,
 	index (owner, category, sorting, status)
 );
 

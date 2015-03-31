@@ -20,7 +20,8 @@ create table #prefix#courses_course (
 	price float not null,
 	status int not null,
 	has_glossary int not null default 0,
-	instructor int not null default 0
+	instructor int not null default 0,
+	details text
 );
 
 create index #prefix#courses_course_owner_category on #prefix#courses_course (owner, category, sorting, status);

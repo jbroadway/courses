@@ -43,6 +43,7 @@ echo $form->handle (function ($form) use ($lock) {
 	$c->price = $_POST['price'];
 	$c->status = $_POST['status'];
 	$c->instructor = $_POST['instructor'];
+	$c->details = $_POST['details'];
 
 	if (! $c->put ()) {
 		echo View::render ('courses/admin/error', $c);
