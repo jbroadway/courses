@@ -160,6 +160,19 @@ if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') 
 	$page->add_script ('/apps/courses/js/api.js');
 	$page->add_script ('/apps/courses/js/course.js');
 
+	// if learner, keep track of which page they're on	
+	$first_page = false;
+	if ($is_learner) {
+		$page->add_script ('/js/json2.js');
+		$page->add_script ('/js/jstorage.js');
+		$page->add_script ('/apps/courses/js/lastpage.js');
+		
+		$ids = array_keys ($pages);
+		if ($ids[0] == $pid) {
+			$first_page = true;
+		}
+	}
+
 	// determine previous and next pages
 	$page_ids = array_keys ($pages);
 	$page_count = count ($page_ids);
@@ -198,7 +211,8 @@ if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') 
 			'has_sections' => count ($sections),
 			'sections' => $sections,
 			'previous' => $previous,
-			'next' => $next
+			'next' => $next,
+			'first_page' => $first_page
 		)
 	);
 

@@ -171,3 +171,10 @@
 .details {
 	padding-top: 10px;
 }
+
+#lastpage-msg {
+	border: 1px solid #fda;
+	background-color: #ffe;
+	padding: 5px 8px;
+	display: none;
+}

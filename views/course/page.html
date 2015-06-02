@@ -60,7 +60,10 @@
 </div>
 
 <div id="courses-course-body">
+	<div id="lastpage-msg"></div>
+
 	<h3>{{title}}</h3>
+
 	{{page_body|none}}
 
 	{% if previous || next %}
@@ -97,6 +100,15 @@ $(function () {
 			incorrect: '{"incorrect"}',
 			instructor: '{"Sorry, but instructors cannot submit answers."}'
 		}
+	});
+	
+	lastpage.init ({
+		first_page: {% if first_page %}true{% else %}false{% end %},
+		course_id: {{course}},
+		page_id: {{id}},
+		page_title: '{{title}}',
+		show_in_element: 'lastpage-msg',
+		msg: '{"Continue from where you last stopped"}'
 	});
 });
 </script>
