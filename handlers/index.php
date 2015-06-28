@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Displays a list of available courses, or if the user is logged in,
+ * a list of the courses they are taking and/or instructing. Passes
+ * course content requests to `courses/course`.
+ */
+
 if (count ($this->params) > 0) {
 	echo $this->run ('courses/course/' . join ('/', $this->params));
 	return;
@@ -11,6 +17,9 @@ $page->layout = $appconf['Courses']['layout'];
 
 $this->run ('admin/util/minimal-grid');
 $page->add_style ('/apps/courses/css/list.css');
+
+$discount = 0;
+$skip = array ();
 
 if (User::is_valid ()) {
 	$courses = courses\Learner::courses ();
@@ -24,6 +33,16 @@ if (User::is_valid ()) {
 			'instructing' => $instructing
 		)
 	);
+
+	$discount = courses\App::discount ();
+
+	$skip = array ();
+	foreach ($courses as $course) {
+		$skip[] = $course->id;
+	}
+	foreach ($instructing as $course) {
+		$skip[] = $course->id;
+	}
 }
 
 // fetch sorted categories
@@ -45,6 +64,13 @@ foreach (array_keys ($categories) as $k) {
 	);
 }
 foreach (array_keys ($courses) as $k) {
+	if (in_array ($courses[$k]->id, $skip)) {
+		continue;
+	}
+
+	$courses[$k]->discount = $discount;
+	$c = new courses\Course ((array) $courses[$k]);
+	$courses[$k]->discount_price = $c->discount_price ($discount);
 	$categories[$courses[$k]->category]->courses[] = $courses[$k];
 	$categories[$courses[$k]->category]->course_count++;
 }

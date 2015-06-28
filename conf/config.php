@@ -24,6 +24,15 @@ comments = On
 ; The payment handler for paid courses.
 payment_handler = ""
 
+; A callback to check for available discounts for the current user's
+; membership type, specified as a percentage discount.
+discount_callback = ""
+
+; A callback to check whether an "invoice me" option should be available
+; for course payments, allowing users to enter immediately and admins
+; to receive a notice of registration that they will manually invoice for.
+allow_invoice_callback = ""
+
 [Admin]
 
 handler = courses/admin

@@ -20,7 +20,14 @@
 <form method="post">
 <input type="hidden" name="subscribe" value="1" />
 {% if availability == 4 %}
-	<button class="courses-course-price courses-course-price-paid">{"Join this course"} - {{price|courses\Filter::money}}</button>
+	<button class="courses-course-price courses-course-price-paid">
+		{"Join this course"} - 
+		{% if discount_price !== $data->price %}
+			<strike>{{price|courses\Filter::money}}</strike> {{discount_price|courses\Filter::money}} ({{discount}}% off)
+		{% else %}
+			{{price|courses\Filter::money}}
+		{% end %}
+	</button>
 {% else %}
 	<button class="courses-course-price courses-course-price-free">{"Join this course for free"}</button>
 {% end %}
@@ -31,4 +38,14 @@
 	</div>
 </div>
 
-<div class="details">{{ details|none }}</div>
+<div class="details">
+	{% if $_SERVER['REQUEST_METHOD'] === 'POST' && $data->availability == 4 && $data->allow_invoice %}
+		<form method="post" id="invoice-me">
+			<input type="hidden" name="subscribe" value="1" />
+			<input type="hidden" name="invoice" value="1" />
+		</form>
+		<p><a href="#" onclick="$('#invoice-me').submit (); return false">{"Request an invoice to pay offline."}</a></p>
+	{% end %}
+
+	{{ details|none }}
+</div>

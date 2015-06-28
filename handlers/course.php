@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Displays the contents of a course, or its summary page for unregistered
+ * users. Passes contact requests to `courses/course/contact` and glossary
+ * requests to `courses/course/glossary`.
+ */
+
 if (count ($this->params) === 0) {
 	echo $this->error (500, __ ('No course specified'), __ ('The link you requested is invalid.'));
 	return;
@@ -18,12 +24,18 @@ if ((int) $course->status < 2) {
 	return;
 }
 
+$is_instructor = false;
+$is_learner = false;
+$discount = 0;
+$allow_invoice = false;
+
 if (User::is_valid ()) {
 	$is_instructor = ($course->instructor == User::val ('id'));
 	$is_learner = (! $instructor) ? courses\Learner::in_course ($cid) : false;
-} else {
-	$is_instructor = false;
-	$is_learner = false;
+	if (! $is_instructor && ! $is_learner) {
+		$discount = courses\App::discount ();
+		$allow_invoice = courses\App::allow_invoice ();
+	}
 }
 
 if (((int) $course->availability === 2 && $_SERVER['REQUEST_METHOD'] === 'GET') || $is_instructor || $is_learner) {
@@ -273,14 +285,50 @@ switch ((int) $course->availability) {
 		$page->title = $course->title;
 		$page->layout = $appconf['Courses']['layout'];
 		$course->details = $tpl->run_includes ($course->details);
+		$course->discount = $discount;
+		$course->discount_price = $course->discount_price ($discount);
+		$course->allow_invoice = $allow_invoice;
 		$this->run ('admin/util/minimal-grid');
 		$page->add_script ('/apps/courses/css/default.css');
 		echo View::render ('courses/course/summary', $course);
 
-		// show login form
+		// Handle registration request
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			// Show login form
 			if (! User::is_valid ()) {
 				$this->redirect ('/user/login?redirect=' . urlencode ($_SERVER['REQUEST_URI']));
+			}
+			
+			// Check for "invoice me" option
+			if ($allow_invoice && $_POST['invoice'] === 1) {
+				// email admin
+				try {
+					$user = User::current ();
+
+					Mailer::send (array (
+						'to' => array (conf ('General', 'email_from')),
+						'subject' => 'Invoice requested for course: ' . $course->title,
+						'text' => View::render ('courses/email/invoice', array (
+							'user' => $user,
+							'course' => $course
+						))
+					));
+					
+					$res = courses\Learner::add_to_course ($course->id, User::val ('id'));
+					if (! $res) {
+						error_log (DB::error ());
+						echo $this->error (404, __ ('An error occurred'), __ ('There was an error in the course registration. Please contact the administrator of the site to assist you.'));
+						return;
+					}
+
+					// reload to show course
+					$this->redirect ($_SERVER['REQUEST_URI']);
+				} catch (Exception $e) {
+					error_log ('Mail error: ' . $e->getMessage ());
+
+					echo $this->error (404, __ ('An error occurred'), __ ('There was an error requesting an invoice. Please contact the administrator of the site to assist you.'));
+					return;
+				}
 			}
 
 			// Show pay wall
@@ -290,7 +338,7 @@ switch ((int) $course->availability) {
 			if ($handler) {
 				printf ('<h3>%s</h3>', __ ('Payment information'));
 				echo $this->run ($handler, array (
-					'amount' => $course->price * 100,
+					'amount' => $course->discount_price * 100,
 					'description' => 'Course: ' . $course->title,
 					'callback' => function ($charge, $payment) use ($course, $controller) {
 						$res = courses\Learner::add_to_course ($course->id, User::val ('id'));
@@ -306,6 +354,7 @@ switch ((int) $course->availability) {
 
 							Mailer::send (array (
 								'to' => array ($user->email, $user->name),
+								'bcc' => array (conf ('General', 'email_from')),
 								'subject' => 'Payment receipt for course: ' . $course->title,
 								'text' => View::render ('courses/email/receipt', array (
 									'user' => $user,

@@ -5,7 +5,7 @@ This is a receipt for your purchase of the "{{course->title}}" course. This is o
 ----- Payment Receipt - {{date ('F j, Y - g:ia')}} -----
 
 Description: {{payment->description}} 
-Amount paid: ${{course->price}} 
+Amount paid: {{course->discount_price|courses\Filter::money}} 
 Course link: http://{{$_SERVER.HTTP_HOST}}/courses/{{course->id}}/{{course->title|URLify::filter}} 
 
 Sincerely,
