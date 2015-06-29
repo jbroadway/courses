@@ -2,7 +2,7 @@
 
 Course name:  {{course->title}} 
 Course price: {{course->price|courses\Filter::money}} 
-Discount: {% if course->discount == 0 %}None{% else %}{{course->discount}}%{% end %} 
+Discount:     {% if course->discount == 0 %}None{% else %}{{course->discount}}%{% end %} 
 Their price:  {{course->discount_price|courses\Filter::money}} 
 Course link:  http://{{$_SERVER.HTTP_HOST}}/courses/{{course->id}}/{{course->title|URLify::filter}} 
 Member link:  http://{{$_SERVER.HTTP_HOST}}/user/details?id={{user->id}} 

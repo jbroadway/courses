@@ -23,7 +23,7 @@
 	<button class="courses-course-price courses-course-price-paid">
 		{"Join this course"} - 
 		{% if discount_price !== $data->price %}
-			<strike>{{price|courses\Filter::money}}</strike> {{discount_price|courses\Filter::money}} ({{discount}}% off)
+			<strike>{{price|courses\Filter::money}}</strike> {{discount_price|courses\Filter::money}} ({{discount}}% {"off"})
 		{% else %}
 			{{price|courses\Filter::money}}
 		{% end %}

@@ -24,7 +24,7 @@
 					<p>
 						{% if course->availability == 4 %}
 							{% if course->discount_price !== $data->course->price %}
-								<strong class="courses-course-price courses-course-price-paid"><strike>{{course->price|courses\Filter::money}}</strike> {{course->discount_price|courses\Filter::money}} ({{course->discount}}% off)</strong>
+								<strong class="courses-course-price courses-course-price-paid"><strike>{{course->price|courses\Filter::money}}</strike> {{course->discount_price|courses\Filter::money}} ({{course->discount}}% {"off"})</strong>
 							{% else %}
 								<strong class="courses-course-price courses-course-price-paid">{{course->price|courses\Filter::money}}</strong>
 							{% end %}
