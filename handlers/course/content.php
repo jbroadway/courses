@@ -43,6 +43,7 @@ $page->add_style ('/apps/courses/css/video-js.min.css');
 $page->add_style ('/apps/courses/css/admin.css');
 $page->add_style ('/apps/courses/css/items.css');
 
+$page->add_script ('/js/jquery-migrate-1.2.1.js');
 $page->add_script ('/apps/courses/js/waypoints.min.js');
 $page->add_script ('/js/jquery-ui/jquery-ui.min.js');
 $page->add_script ('/apps/courses/js/knockout-2.2.0.min.js');
