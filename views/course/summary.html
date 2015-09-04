@@ -3,7 +3,7 @@
 		<div class="thumbnail-wrapper">
 			<div class="thumbnail"
 				{% if thumb != '' %}
-					style="background-image: url('/{{thumb|Image::resize (%s, 600, 450, 'cover', 'ext')}}')"
+					style="background-image: url('/{{thumb|Image::resize (%s, 600, 396, 'cover', 'ext')}}')"
 				{% else %}
 					style="background-image: url(/apps/courses/css/default.jpg)"
 				{% end %}
