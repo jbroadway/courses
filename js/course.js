@@ -157,6 +157,8 @@ var course = (function ($) {
 				} else {
 					answer = el.value;
 				}
+			} else if (input.attr ('type') === 'radio') {
+				answer = $('input[name=' + input.attr ('name') + ']:checked').val ();
 			}
 
 			answers[id] = answer;
