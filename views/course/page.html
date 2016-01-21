@@ -106,7 +106,7 @@ $(function () {
 		first_page: {% if first_page %}true{% else %}false{% end %},
 		course_id: {{course}},
 		page_id: {{id}},
-		page_title: '{{title}}',
+		page_title: '{{title|trim}}',
 		show_in_element: 'lastpage-msg',
 		msg: '{"Continue from where you last stopped"}'
 	});
