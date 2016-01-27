@@ -50,6 +50,8 @@ create table #prefix#courses_learner (
 	user int not null,
 	course int not null,
 	ts datetime not null,
+	score tinyint not null default -1,
+	passed tinyint not null default -1,
 	primary key (user, course),
 	index (ts)
 );

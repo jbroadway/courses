@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Provides instructors with the details of a learner.
+ */
+
 $this->require_acl ('admin', 'courses');
 
 $page->layout = 'admin';
@@ -40,7 +44,8 @@ $page->add_script ('/apps/courses/js/admin.js');
 echo View::render ('courses/course/learner', array (
 	'course' => $c->id,
 	'learner' => $u->id,
-	'items' => $items
+	'items' => $items,
+	'details' => courses\Learner::get ($u->id)
 ));
 
 ?>

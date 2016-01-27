@@ -14,10 +14,13 @@
 <p>
 <table id="learners" width="100%">
 	<tr>
-		<th width="30%">{"Learner"}</th>
-		<th width="30%">{"Progress"}</th>
-		<th width="20%">{"Status"}</th>
-		<th width="20%">&nbsp;</th>
+		<th width="20%">{"Learner"}</th>
+		<th width="13%">{"Joined"}</th>
+		<th width="18%">{"Progress"}</th>
+		<th width="12%" style="text-align: center">{"Status"}</th>
+		<th width="11%" style="text-align: center">{"Score"}</th>
+		<th width="11%" style="text-align: center">{"Passed"}</th>
+		<th width="15%">&nbsp;</th>
 	</tr>
 	<tbody id="learner-list"></tbody>
 </table>
@@ -35,12 +38,15 @@ $(function () {
 <script id="learner-tpl" type="text/html">
 	<tr id="learner-\{{id}}" data-id="\{{course}}" data-id="\{{id}}">
 		<td><a href="mailto:\{{email}}">\{{name}}</a></td>
+		<td>\{{joined}}</td>
 		<td>
 			<span class="learner-progress-bar">
 				<span class="learner-progress-made" id="progress-\{{id}}"></span>
 			</span>
 		</td>
-		<td id="status-\{{id}}">{"Incomplete"}</td>
+		<td id="status-\{{id}}" style="text-align: center">{"Incomplete"}</td>
+		<td id="score-\{{id}}" style="text-align: center">-</td>
+		<td id="passed-\{{id}}" style="text-align: center">-</td>
 		<td style="text-align: right">
 			<a href="/courses/course/learner?id=\{{course}}&learner=\{{id}}">{"Details"}</a>
 			&nbsp;|&nbsp;

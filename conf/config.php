@@ -39,6 +39,6 @@ handler = courses/admin
 name = Courses
 install = courses/install
 upgrade = courses/upgrade
-version = 0.9.2-beta
+version = 0.9.4-beta
 
 ; */ ?>

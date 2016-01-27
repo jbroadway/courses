@@ -159,10 +159,23 @@ var courses = (function ($) {
 		for (var i = 0; i < self.learners.length; i++) {
 			self.learners[i].course = self.course;
 			list.append (self.tpl.learner (self.learners[i]));
+
 			$('#progress-' + self.learners[i].id).css ({width: self.learners[i].progress + '%'});
+
 			if (parseInt (self.learners[i].progress) === 100) {
 				$('#progress-' + self.learners[i].id).addClass ('learner-progress-done');
 				$('#status-' + self.learners[i].id).html ($.i18n ('Complete'));
+			}
+
+			if (parseInt (self.learners[i].score) !== -1) {
+				$('#score-' + self.learners[i].id).html (self.learners[i].score + '%');
+			}
+
+			var passed = parseInt (self.learners[i].passed);
+			if (passed === 1) {
+				$('#passed-' + self.learners[i].id).html ($.i18n ('Yes'));
+			} else if (passed === 0) {
+				$('#passed-' + self.learners[i].id).html ($.i18n ('No'));
 			}
 		}
 

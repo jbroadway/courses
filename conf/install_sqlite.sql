@@ -54,6 +54,8 @@ create table #prefix#courses_learner (
 	user integer not null,
 	course integer not null,
 	ts datetime not null,
+	score tinyint not null default -1,
+	passed tinyint not null default -1,
 	primary key (user, course)
 );
 

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Provides instructors with a list of learners.
+ */
+
 $this->require_acl ('admin', 'courses');
 
 $page->layout = 'admin';
@@ -17,6 +21,8 @@ foreach ($learners as $k => $learner) {
 	$learners[$k]->progress = isset ($progress[$learner->id])
 		? ceil ($progress[$learner->id])
 		: 0;
+
+	$learners[$k]->joined = strip_tags (I18n::short_date_year ($learner->ts));
 }
 
 $page->title = $c->title . ' - ' . __ ('Learners') . ' (<span id="learner-count">' . count ($learners) . '</span>)';
@@ -29,7 +35,9 @@ $page->add_script (I18n::export (
 	'Learner added.',
 	'Are you sure you want to remove this learner from the course?',
 	'Incomplete',
-	'Complete'
+	'Complete',
+	'Yes',
+	'No'
 ));
 
 echo View::render ('courses/course/learners', array (
@@ -37,5 +45,3 @@ echo View::render ('courses/course/learners', array (
 	'course_title' => $c->title,
 	'learners' => $learners
 ));
-
-?>

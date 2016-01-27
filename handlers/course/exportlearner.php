@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Export all inputs and feedback for a single learner.
+ */
+
 $this->require_acl ('admin', 'courses');
 
 $page->layout = 'admin';

@@ -10,6 +10,45 @@ use User;
  */
 class Learner {
 	/**
+	 * Update the score of a learner.
+	 */
+	public static function update_score ($user, $score) {
+		if ($score == '') {
+			$score = -1;
+		}
+
+		return DB::execute (
+			'update #prefix#courses_learner set score = ? where user = ?',
+			$score,
+			$user
+		);
+	}
+	/**
+	 * Update the passed status of a learner.
+	 */
+	public static function update_passed ($user, $passed) {
+		if ($passed == '') {
+			$passed = -1;
+		}
+
+		return DB::execute (
+			'update #prefix#courses_learner set passed = ? where user = ?',
+			$passed,
+			$user
+		);
+	}
+
+	/**
+	 * Get a learner by username.
+	 */
+	public static function get ($user) {
+		return DB::single (
+			'select * from #prefix#courses_learner where user = ?',
+			$user
+		);
+	}
+	
+	/**
 	 * Checks if a user is registered for the specified course.
 	 * If no user is specified, it will use the current user.
 	 */

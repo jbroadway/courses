@@ -75,14 +75,19 @@ class Course extends Model {
 			'select
 				#prefix#user.id as id,
 				#prefix#user.name as name,
-				#prefix#user.email as email
+				#prefix#user.company as company,
+				#prefix#user.email as email,
+				#prefix#courses_learner.ts,
+				#prefix#courses_learner.score,
+				#prefix#courses_learner.passed
 			from
 				#prefix#user, #prefix#courses_learner
 			where
 				#prefix#courses_learner.course = ? and
 				#prefix#courses_learner.user = #prefix#user.id
 			order by
-				#prefix#user.name asc',
+				#prefix#user.company asc,
+				#prefix#courses_learner.ts desc',
 			$this->id
 		);
 	}

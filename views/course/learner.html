@@ -1,3 +1,19 @@
+<form method="post" action="/courses/course/learnerscore">
+	<input type="hidden" name="id" value="{{course}}" />
+	<input type="hidden" name="learner" value="{{learner}}" />
+	<p style="float: right">
+		{"Score"}: <input type="text" name="score" size="6" value="{{details->score|courses\Filter::learner_score}}" />%
+		&nbsp;
+		{"Passed"}: <select name="passed">
+			<?= Form::option (-1, __ ('- select -'), (int) $data->details->passed) ?>
+			<?= Form::option (1, __ ('Yes'), (int) $data->details->passed) ?>
+			<?= Form::option (0, __ ('No'), (int) $data->details->passed) ?>
+		</select>
+		&nbsp;
+		<button>{"Update"}</button>
+	</p>
+</form>
+
 <p>
 	<a href="/courses/course/learners?id={{course}}">&laquo; {"Back"}</a>
 	&nbsp;|&nbsp;

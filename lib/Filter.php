@@ -35,6 +35,28 @@ class Filter {
 	public static function money ($price) {
 		return money_format ('$%i', $price);
 	}
+
+	/**
+	 * Filters -1 from the learner score.
+	 */
+	public static function learner_score ($score) {
+		if ((int) $score === -1) {
+			return '';
+		}
+
+		return $score;
+	}
+
+	/**
+	 * Filters -1 from the learner passed status.
+	 */
+	public static function learner_passed ($passed) {
+		if ((int) $passed === -1) {
+			return '';
+		}
+
+		return ((int) $passed === 0) ? __ ('No') : __ ('Yes');
+	}
 }
 
 ?>

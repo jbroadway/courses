@@ -234,16 +234,16 @@
 
 .learner-progress-bar {
 	display: block;
-	width: 255px;
-	height: 16px;
-	border: 1px solid #bbb;
+	width: 180px;
+	height: 14px;
+	border: 0px solid #bbb;
 	background-color: #fff;
 }
 
 .learner-progress-made {
 	display: block;
 	width: 0%;
-	height: 16px;
+	height: 14px;
 	border: 0;
 	background-color: #fd0;
 }
