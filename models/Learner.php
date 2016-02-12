@@ -70,7 +70,7 @@ class Learner {
 		$user = $user ? $user : User::val ('id');
 		
 		$res = DB::execute (
-			'insert into #prefix#courses_learner values (?, ?, ?)',
+			'insert into #prefix#courses_learner (user, course, ts) values (?, ?, ?)',
 			$user,
 			$course,
 			gmdate ('Y-m-d H:i:s')
