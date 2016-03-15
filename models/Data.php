@@ -71,14 +71,19 @@ class Data extends Model {
 
 	public static function learner_status ($course, $user = false) {
 		$user = $user ? $user : User::val ('id');
+
 		$inputs = Item::total_inputs ($course);
+		if (! $inputs || $inputs === 0) {
+			return -1;
+		}
+
 		$res = DB::shift (
 			'select sum(status) from #prefix#courses_data
 			where course = ? and user = ?',
 			$course,
 			$user
 		);
-		$res = ($inputs > 0) ? ($res / $inputs) * 100 : 0;
+		$res = ($res / $inputs) * 100;
 		if ($res > 100) {
 			$res = 100;
 		}
